@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bundle Tracker Template</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <p class="eyebrow">Template</p>
+      <h1>Bundle Tracker</h1>
+      <p class="lede">
+        A wired frontend template for exploring normalized Gimkit bundle snapshots with a Bun API backend.
+      </p>
+
+      <section class="stats" id="stats"></section>
+
+      <label class="search">
+        <span>Search files</span>
+        <input id="search" type="search" placeholder="Try App, Device, _index, original asset name">
+      </label>
+
+      <div class="list" id="file-list"></div>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Inspector</p>
+          <h2 id="file-title">Select a file</h2>
+          <p class="hero-copy" id="hero-copy">Choose a normalized bundle asset to inspect its mapped source.</p>
+        </div>
+        <button class="ghost" id="copy-name" disabled>Copy Name</button>
+      </section>
+
+      <section class="meta" id="meta-panel">
+        <article>
+          <h3>Ready</h3>
+          <p>File metadata appears here once you pick an entry from the sidebar.</p>
+        </article>
+      </section>
+
+      <section class="viewer">
+        <div class="viewer-header">
+          <span>Source</span>
+          <button class="ghost" id="copy-code" disabled>Copy Code</button>
+        </div>
+        <pre><code id="code-view">// waiting for selection</code></pre>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

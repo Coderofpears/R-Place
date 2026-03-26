@@ -1,0 +1,17 @@
+---
+import EditKit from "$lib/components/EditKit.svelte";
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<Layout
+	path={[
+		{
+			label: "Kits"
+		},
+		{
+			label: "Edit"
+		}
+	]}
+>
+	<EditKit client:only="svelte" />
+</Layout>

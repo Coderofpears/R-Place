@@ -1,0 +1,53 @@
+---
+import Layout from "$lib/layouts/layout.astro";
+import { Button } from "$lib/components/ui/button/index.js";
+---
+
+<Layout>
+	<title>Home</title>
+	<div class="center">
+		<img class="center-img" src="/assets/images/librekit-logo-white.svg" />
+		<p style="">
+			<b>[WIP]</b>
+			A free
+			<a href="https://www.gnu.org/philosophy/free-sw.en.html">
+				as in freedom
+			</a>
+			re-implementation of Gimkit with a frontend written in Astro/Svelte and a backend written in TypeScript as well as Go.
+		</p>
+		<div style="padding: 15px 25px;">
+			<Button href="/join" variant="secondary">Join</Button>
+			<Button href="/kits" variant="secondary">Kits</Button>
+			<Button href="/soundtest" variant="secondary">Sound Test</Button>
+			<Button href="/animationtest" variant="secondary">Animation Test</Button>
+			<Button
+				href="https://rick.nerial.uk"
+				variant="secondary"
+			>
+				Super Secret Real Free Robux
+			</Button>
+		</div>
+		<p>Powered by Top Z Client</p>
+	</div>
+	<html>
+		<style>
+			.center-img {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				width: 50%;
+			}
+
+			h1 {
+				padding: 15px 25px;
+				font-size: 4rem;
+			}
+
+			.center {
+				margin: auto;
+				position: relative;
+				text-align: center;
+			}
+		</style>
+	</html>
+</Layout>

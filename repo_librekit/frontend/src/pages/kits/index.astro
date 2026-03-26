@@ -1,0 +1,14 @@
+---
+import Kits from "$lib/components/Kits.svelte";
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<Layout
+	path={[
+		{
+			label: "Kits"
+		}
+	]}
+>
+	<Kits client:only="svelte" />
+</Layout>

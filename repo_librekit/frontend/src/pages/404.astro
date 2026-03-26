@@ -1,0 +1,14 @@
+---
+import F404 from "$lib/components/404.svelte";
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<Layout
+	path={[
+		{
+			label: "404"
+		}
+	]}
+>
+	<F404 client:only="svelte" />
+</Layout>

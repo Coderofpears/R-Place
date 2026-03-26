@@ -1,0 +1,109 @@
+---
+import "$lib/app.css";
+import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+import Settings from "$lib/components/Settings.svelte";
+import { Toaster } from "$lib/components/ui/sonner";
+
+const { title, path } = Astro.props;
+const url = Astro.url;
+
+const formattedTitle = (title ? `${title} | ` : "") + "librekit";
+const description =
+	"A free as in freedom API-compatible from-scratch reimplementation of Gimkit.";
+---
+
+<html lang="en" class="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title ? `${title} | ` : ""} librekit</title>
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={formattedTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={url} />
+		<script type="application/json" id="librekit-config" is:inline>
+			{
+				"apiBase": "http://localhost:8080",
+				"isRelay": true,
+				"isLocalRelay": true,
+				"useStegCloak": true,
+				"chat": {
+					"url": "ws://localhost:7002",
+					"authType": "none",
+					"defaultChannel": "#librekit"
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<Toaster position="top-right" client:only="svelte" />
+		<header
+			class="border-b p-2 bg-primary-foreground flex items-center justify-center"
+		>
+			<div class="flex items-center w-full sm:w-2/3 gap-3">
+				<div class="flex-grow">
+					<Breadcrumb {path} />
+				</div>
+				<a href="https://codeberg.org/librekit/librekit/">
+					<img
+						class="logo-light"
+						src="/codeberg-logo_icon_blue-64x64.png"
+						alt="Codeberg logo"
+						width="30"
+						height="30"
+					/>
+					<img
+						class="logo-dark"
+						src="/codeberg-logo_icon_white-64x64.png"
+						alt="Codeberg logo"
+						width="30"
+						height="30"
+					/>
+				</a>
+				<Settings client:idle />
+			</div>
+		</header>
+		<div class="flex items-center justify-center">
+			<div class="w-full sm:w-2/3 p-3">
+				<noscript>
+					<div class="mt-8 mb-8 bg-gray-800 rounded-lg p-4 text-white">
+						<p>
+							<b>WARNING:</b> It looks like you have disabled JavaScript. Please
+							enable it!
+						</p>
+						<p class="mt-4">
+							In case you're wondering, you don't need to worry about non-free
+							JavaScript here: <b>librekit is free (as in freedom) software</b> (source
+							code
+							<a
+								href="https://codeberg.org/librekit/librekit"
+								class="text-blue-500 underline">here</a
+							>!) and user-made modifications are more than welcome.
+						</p>
+					</div>
+				</noscript>
+				<slot />
+			</div>
+		</div>
+	</body>
+</html>
+
+<style>
+	.logo-light {
+		display: block;
+	}
+
+	.logo-dark {
+		display: none;
+	}
+
+	.dark .logo-light {
+		display: none;
+	}
+
+	.dark .logo-dark {
+		display: block;
+	}
+</style>

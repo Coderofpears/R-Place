@@ -1,0 +1,63 @@
+import type { BasicData, GamemodeData, SplitsData } from "../types";
+import { getGamemodeData } from "../util";
+
+export abstract class Autosplitter {
+    data!: GamemodeData;
+
+    constructor(public id: string) {
+        this.loadData();
+        api.onStop(() => this.destroy());
+    }
+
+    loadData() {
+        this.data = getGamemodeData(this.id);
+    }
+
+    save() {
+        api.storage.setValue(`${this.id}Data`, this.data);
+    }
+
+    get attempts() {
+        return this.data.attempts[this.getCategoryId()] ?? 0;
+    }
+
+    addAttempt() {
+        this.data.attempts[this.getCategoryId()] = this.attempts + 1;
+        this.save();
+    }
+
+    abstract get pb(): number | undefined;
+
+    abstract getCategoryId(): string;
+    abstract destroy(): void;
+    abstract reset(): void;
+}
+
+export abstract class BasicAutosplitter extends Autosplitter {
+    declare data: BasicData;
+
+    get pb() {
+        return this.data.pb[this.getCategoryId()];
+    }
+}
+
+export abstract class SplitsAutosplitter extends Autosplitter {
+    declare data: SplitsData;
+
+    get pb() {
+        const pb = this.data.pb[this.getCategoryId()];
+        return pb?.[pb.length - 1];
+    }
+
+    get pbSplits(): number[] {
+        const categoryId = this.getCategoryId();
+        if(!this.data.pb[categoryId]) this.data.pb[categoryId] = [];
+        return this.data.pb[this.getCategoryId()];
+    }
+
+    get bestSplits(): number[] {
+        const categoryId = this.getCategoryId();
+        if(!this.data.bestSplits[categoryId]) this.data.bestSplits[categoryId] = [];
+        return this.data.bestSplits[this.getCategoryId()];
+    }
+}

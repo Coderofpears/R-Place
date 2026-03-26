@@ -1,0 +1,12 @@
+steps:
+  build:
+    image: debian
+    secrets: [ BUILD_TYPE, DISCORD_TOKEN ]
+    when:
+      branch: [master]
+      event: [push]
+    commands: |
+      apt-get update && apt-get install git python3 python3-pip npm -y
+      . build/envsetup.sh
+      pip3 install disnake --break-system-packages
+      ci # this is the part that actually does most of the work

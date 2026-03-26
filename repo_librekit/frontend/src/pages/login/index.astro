@@ -1,0 +1,14 @@
+---
+import Login from "$lib/components/Login.svelte";
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<Layout
+	path={[
+		{
+			label: "Log in"
+		}
+	]}
+>
+	<Login client:load />
+</Layout>

@@ -1,0 +1,96 @@
+#dnd-action-dragged-el {
+    outline: none;
+}
+
+:root {
+    --text: black;
+    --bg-primary: white;
+    --bg-secondary: white;
+}
+
+/* Menu views */
+.view-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.view-list {
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+}
+
+/* Menu buttons */
+.gl-row {
+    display: flex;
+    gap: 8px;
+}
+
+.gl-join {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.gl-join .openPlugins {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    border: none;
+    background-color: rgb(30, 7, 107);
+    width: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.gl-join .openPlugins:hover {
+    background-color: rgb(43, 10, 155);
+}
+
+.gl-join .openPlugins svg {
+    fill: white;
+}
+
+.noPluginButtons .gl-button,
+.noPluginButtons *:has(> * > .gl-button2),
+.noPluginButtons div:has(> * > * > .gl-button3),
+.noPluginButtons div:has(> * > * > * > * > .gl-button5),
+.noPluginButtons .gl-join .openPlugins,
+.noPluginButtons .ant-space-item:has(.gl-listButton) {
+    display: none;
+}
+
+/* Load animation */
+.animWrap {
+    pointer-events: none;
+}
+
+.loadAnim {
+    position: relative;
+    animation: loading infinite 1s ease-in-out;
+}
+
+.loadAnim:after, .loadAnim:before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 45px;
+}
+
+.loadAnim:after {
+    right: 0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 85%);
+}
+
+.loadAnim:before {
+    left: 0;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 85%);
+}
+
+@keyframes loading {
+    0% {
+        margin-left: -160px;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}

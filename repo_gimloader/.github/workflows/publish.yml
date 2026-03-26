@@ -1,0 +1,72 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    name: Release Extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Zip source code
+        run: zip -r source.zip . -x ".git/*"
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun i --frozen-lockfile
+
+      - name: Build for Firefox
+        run: |
+          bun run buildAllFirefox
+          cd extension/build
+          zip -r ../../firefox.zip .
+
+      - name: Read release notes
+        id: read_notes
+        run: |
+          {
+            echo "notes<<EOF"
+            cat release-notes.txt | sed 's/^/- /'
+            echo
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Release on AMO
+        uses: browser-actions/release-firefox-addon@latest
+        with:
+          addon-id: gimloader@thelazysquid.github.io
+          addon-path: firefox.zip
+          source-path: source.zip
+          approval-note: |
+            To build from source:
+            1. Install bun from bun.com
+            2. bun i --frozen-lockfile
+            3. bun run buildAllFirefox
+            The extension will be output in ./extension/build
+          license: MIT
+          release-note: ${{ steps.read_notes.outputs.notes }}
+          auth-api-issuer: ${{ secrets.AMO_ISSUER }}
+          auth-api-secret: ${{ secrets.AMO_SECRET }}
+
+      - name: Build for Chrome
+        run: |
+          bun run buildAll
+          cd extension/build
+          zip -r ../../chrome.zip .
+
+      - name: Release on Chrome Webstore
+        uses: mnao305/chrome-extension-upload@v5.0.0
+        with:
+          file-path: chrome.zip
+          extension-id: ngbhofnofkggjbpkpnogcdfdgjkpmgka
+          client-id: ${{ secrets.CRX_CLIENT_ID }}
+          client-secret: ${{ secrets.CRX_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CRX_REFRESH_TOKEN }}

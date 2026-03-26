@@ -1,0 +1,58 @@
+---
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<style>
+	@media (prefers-reduced-motion: no-preference) {
+		.librekit-spinning-logo {
+			animation: librekit-spinning-logo infinite 3s
+				cubic-bezier(0.165, 0.84, 0.44, 1);
+		}
+	}
+
+	@keyframes librekit-spinning-logo {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.logo-light {
+		display: none;
+	}
+
+	.logo-dark {
+		display: block;
+	}
+
+	.dark .logo-light {
+		display: none;
+	}
+
+	.dark .logo-dark {
+		display: block;
+	}
+</style>
+
+<Layout
+	path={[
+		{
+			label: "Animation test"
+		}
+	]}
+>
+	<div class="flex justify-center">
+		<img
+			src="/assets/images/librekit-logo-white.svg"
+			alt="librekit logo"
+			class="librekit-spinning-logo logo-dark"
+		/>
+		<img
+			src="/assets/images/librekit-logo.svg"
+			alt="librekit logo"
+			class="librekit-spinning-logo logo-light"
+		/>
+	</div>
+</Layout>

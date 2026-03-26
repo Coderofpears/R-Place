@@ -1,0 +1,14 @@
+---
+import SoundTest from "$lib/components/SoundTest.svelte";
+import Layout from "$lib/layouts/layout.astro";
+---
+
+<Layout
+	path={[
+		{
+			label: "Sound test"
+		}
+	]}
+>
+	<SoundTest client:load />
+</Layout>
